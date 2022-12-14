@@ -1,0 +1,49 @@
+body {
+    width: 100vw;
+    height: auto;
+    background-color: lightgray;
+}
+
+.cards-container {
+    width: 100%;
+    height: 100%s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cards {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.marques-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.marques {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.h3 {
+    align-self: center;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+img {
+    object-fit: cover!important;
+    height: 200px!important;
+}

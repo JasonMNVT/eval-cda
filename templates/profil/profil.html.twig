@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil
+{% endblock %}
+
+{% block body %}
+	<div class="container"></div>
+	<h1 class="title text-center mt-4 mb-4">Les annonces de :
+		{{app.user.username}}
+	</h1>
+
+	<div class="cards-container">
+		<div class="cards">
+			{% for computer in computers %}
+				<div class="card" style="width: 18rem;">
+					<img class="card-img-top" src="{{asset(computer.image )}}" alt="Card image cap">
+					<div class="card-body">
+						<h5 class="card-title">
+							{{computer.model}}
+						</h5>
+						<p class="card-text">
+							{{computer.description|raw}}
+						</p>
+						<a href="{{ path('app_computer_show', {'id': computer.id}) }}" class="btn btn-success">Voir en détail</a>
+						<a href="{{ path('app_computer_edit', {'id': computer.id}) }}">edit</a>
+						{{ include('computer/_delete_form.html.twig') }}
+						{% if app.user %}
+							{% if computer.isUsersFav(app.user) %}
+								<a href="{{ path('app_computer_fav', {'id': computer.id}) }}" class="btn btn-success">
+									<i class="fa-solid fa-heart"></i>
+								</a>
+							{% else %}
+								<a href="{{ path('app_computer_fav', {'id': computer.id}) }}" class="btn btn-success">
+									<i class="fa-regular fa-heart"></i>
+								</a>
+							{% endif %}
+						{% endif %}
+					</div>
+				</div>
+			{% else %}
+				<tr>
+					<td colspan="3">no records found</td>
+				</tr>
+			{% endfor %}
+		</div>
+	</div>
+
+	<h1 class="title text-center mt-4 mb-4">Favoris de :
+		{{app.user.username}}
+	</h1>
+	<div class="cards-container">
+		<div class="cards">
+			{% for computer in annoncesFav %}
+				<div class="card" style="width: 18rem;">
+					<img class="card-img-top" src="{{asset('images_directory/' ~ computer.computers.image )}}" alt="Card image cap">
+					<img class="card-img-top" src="{{asset(computer.computers.image )}}" alt="Card image cap">
+					<div class="card-body">
+						<h5 class="card-title">
+							{{computer.computers.model}}
+						</h5>
+						<p class="card-text">
+							{{computer.computers.description|raw}}
+						</p>
+						<a href="{{ path('app_computer_show', {'id': computer.computers.id}) }}" class="btn btn-success">Voir en détail</a>
+						{% if app.user %}
+							{% if computer.computers.isUsersFav(app.user) %}
+								<a href="{{ path('app_computer_fav', {'id': computer.computers.id}) }}" class="btn btn-success">
+									<i class="fa-solid fa-heart"></i>
+								</a>
+							{% else %}
+								<a href="{{ path('app_computer_fav', {'id': computer.computers.id}) }}" class="btn btn-success">
+									<i class="fa-regular fa-heart"></i>
+								</a>
+							{% endif %}
+						{% endif %}
+					</div>
+				</div>
+			{% else %}
+				<tr>
+					<td colspan="3">no records found</td>
+				</tr>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

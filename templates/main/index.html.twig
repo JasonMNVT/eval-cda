@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Site de vente d'ordinateurs
+{% endblock %}
+
+{% block body %}
+	<div class="marques-container">
+		<div class="marques">
+			<h3 class="h3">Trouvez l'ordinateur de vos rêves</h3>
+			<table class="table">
+				<tbody>
+					{% for brand in brands %}
+						<tr>
+							<td>
+								<a href="{{ path('card', {'id':brand.id}) }}">{{ brand.name }}</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="3">no records found</td>
+						</tr>
+					{% endfor %}
+					{% if app.user %}
+						<div class="text-center mt-3">
+							<a href="{{ path('app_computer_new') }}" class="btn btn-success">Ajouter une nouvelle annonce</a>
+						</div>
+					{% endif %}
+
+					{% if is_granted('ROLE_ADMIN') %}
+						<div class="text-center mt-3">
+							<a class="btn btn-warning" href="{{ path('app_computer_index')}}">Liste des annonces</a>
+							<a class="btn btn-warning" href="{{ path('app_brand_index')}}">Liste des marques</a>
+						</div>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="cards-container">
+		<div class="cards">
+			{% for computer in computers %}
+				<div
+					class="card" style="width: 18rem;">
+					{# <img class="card-img-top" src="{{asset('images_directory/' ~ annonce.imgfile )}}" alt="Card image cap"> #}
+					<img class="card-img-top" src="{{asset(computer.image )}}" alt="Card image cap">
+					<div class="card-body">
+						<h5 class="card-title">
+							{{computer.model}}
+						</h5>
+						<p class="card-text">
+							{{computer.description|raw}}
+						</p>
+						<a href="{{ path('app_computer_show', {'id': computer.id}) }}" class="btn btn-success">Voir l'annonce</a>
+						{% if app.user %}
+							{% if computer.isUsersFav(app.user) %}
+								<a href="{{ path('app_computer_fav', {'id': computer.id}) }}" class="btn btn-success">
+									<i class="fa-solid fa-heart"></i>
+								</a>
+							{% else %}
+								<a href="{{ path('app_computer_fav', {'id': computer.id}) }}" class="btn btn-success">
+									<i class="fa-regular fa-heart"></i>
+								</a>
+							{% endif %}
+						{% endif %}
+					</div>
+				</div>
+			{% else %}
+				<tr>
+					<td colspan="3">no records found</td>
+				</tr>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block title %}Ordinateur
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="title text-center mt-4 mb-4">Annonces pour la marque :
+			{{marq.name}}</h1>
+		<div class="cards-container">
+			<div class="cards">
+				{% for computer in marq.computers %}
+					<div class="card" style="width: 18rem;">
+						{# <img class="card-img-top" src="{{asset('images_directory/' ~ computer.image )}}" alt="Card image cap"> #}
+						<img class="card-img-top" src="{{asset(computer.image )}}" alt="Card image cap">
+						<div class="card-body">
+							<h5 class="card-title">
+								{{computer.model}}
+							</h5>
+							<p class="card-text">
+								{{computer.description|raw}}
+							</p>
+							<a href="{{ path('app_computer_show', {'id': computer.id}) }}" class="btn btn-success">Voir en détail</a>
+							{# {% if app.user %}
+								{% if computer.isUsersFav(app.user) %}
+									<a href="{{ path('app_computer_fav', {'id': computer.id}) }}" class="btn btn-success">
+										<i class="fa-solid fa-heart"></i>
+									</a>
+								{% else %}
+									<a href="{{ path('app_computer_fav', {'id': computer.id}) }}" class="btn btn-success">
+										<i class="fa-regular fa-heart"></i>
+									</a>
+								{% endif %}
+							{% endif %}
+						</div>
+					</div>
+				{% else %}
+					<tr>
+						<td colspan="3">no records found</td>
+					</tr> #}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
